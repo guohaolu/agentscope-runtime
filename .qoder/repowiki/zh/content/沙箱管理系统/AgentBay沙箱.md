@@ -126,24 +126,25 @@ AgentBay 沙箱采用“服务-管理-实现”的分层架构：
 
 ```mermaid
 sequenceDiagram
-participant App as "应用/Agent"
-participant Service as "SandboxService"
-participant Manager as "SandboxManager"
-participant Registry as "SandboxRegistry"
-participant Box as "AgentbaySandbox"
-participant Cloud as "AgentBay 云服务"
-App->>Service : 创建/启动服务
-App->>Service : connect(session_id, user_id, [AGENTBAY])
-Service->>Manager : 获取/创建会话映射
-Service->>Registry : 解析 AGENTBAY 类型
-Service->>Box : 实例化 AgentbaySandbox
-Box->>Cloud : 初始化云客户端/创建会话
-App->>Box : 调用工具如 run_shell_command
-Box->>Cloud : 执行工具调用
-Cloud-->>Box : 返回结果
-Box-->>App : 工具执行结果
-App->>Service : release()/stop()
-Service->>Manager : 释放/清理
+    participant App as "应用/Agent"
+    participant Service as "SandboxService"
+    participant Manager as "SandboxManager"
+    participant Registry as "SandboxRegistry"
+    participant Box as "AgentbaySandbox"
+    participant Cloud as "AgentBay 云服务"
+    
+    App->>Service: "创建/启动服务"
+    App->>Service: "connect(session_id, user_id, [AGENTBAY])"
+    Service->>Manager: "获取/创建会话映射"
+    Service->>Registry: "解析 AGENTBAY 类型"
+    Service->>Box: "实例化 AgentbaySandbox"
+    Box->>Cloud: "初始化云客户端/创建会话"
+    App->>Box: "调用工具如 run_shell_command"
+    Box->>Cloud: "执行工具调用"
+    Cloud-->>Box: "返回结果"
+    Box-->>App: "工具执行结果"
+    App->>Service: "release()/stop()"
+    Service->>Manager: "释放/清理"
 ```
 
 图示来源
